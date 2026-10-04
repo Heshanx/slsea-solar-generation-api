@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    container_name: solar-db
+    environment:
+      POSTGRES_USER: solar
+      POSTGRES_PASSWORD: solar_pw
+      POSTGRES_DB: solar
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U solar -d solar"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
